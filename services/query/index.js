@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 4002;
 
 app.use(express.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 const posts= {};
 
