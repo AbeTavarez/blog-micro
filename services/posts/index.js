@@ -41,11 +41,11 @@ app.post("/posts", async (req, res) => {
   try {
     // emit event to event bus
     await axios.post("http://localhost:4005/events", {
-      type: POST_CREATED,
+      type: "PostCreated",
       data: { id, title },
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
   }
 
   res.status(201).send(posts[id]);
