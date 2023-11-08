@@ -8,6 +8,9 @@ const PORT = 4005;
 app.use(express.json());
 app.use(morgan('dev'));
 
+// data store
+const eventsStore = [];
+
 /**
  * @method POST 
  * @router /events
@@ -17,6 +20,9 @@ app.use(morgan('dev'));
 app.post('/events', (req, res) => {
     const event = req.body;
     console.log("EVENT BUS Event: ", event);
+
+    // add event to event store
+    eventsStore.push(event);
 
         axios.post('http://localhost:4000/events', event).catch(err => {
             console.log(err.message);
