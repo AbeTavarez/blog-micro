@@ -12,8 +12,18 @@ app.use(morgan('dev'));
 const eventsStore = [];
 
 /**
+ * @method GET 
+ * @route /events
+ * @description Send all events stored in the event store
+ */
+app.get('/events', (req, res) => {
+    res.status(200).send(eventsStore);
+});
+
+
+/**
  * @method POST 
- * @router /events
+ * @route /events
  * @emits event to services
  * @description Takes in events and echos event to services
  */
