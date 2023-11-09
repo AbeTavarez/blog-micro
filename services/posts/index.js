@@ -3,7 +3,6 @@ const { randomBytes } = require("crypto");
 const cors = require("cors");
 const morgan = require("morgan");
 const axios = require("axios");
-const { POST_CREATED } = require("../event-types");
 
 const app = express();
 const PORT = 4000;
