@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: posts-depl
+spec:
+  replicas: 1
+  selector: # list the pods this deployment should manage using the matchLabels
+    matchLabels:
+      app: posts
+  template: # list the configuration of the pods we want this deployment to create
+    metadata:
+      labels:
+        app: posts
+    spec:
+      containers:
+        - name: posts
+          image: attacktitan/blogmicro-posts
+    
