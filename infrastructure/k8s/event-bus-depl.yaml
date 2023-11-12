@@ -1,33 +1,33 @@
-# === Posts Deployment
+# === Deployment
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: posts-depl
+  name: event-bus-depl
 spec:
   replicas: 1
   selector: # list the pods this deployment should manage using the matchLabels
     matchLabels:
-      app: posts
+      app: event-bus
   template: # list the configuration of the pods we want this deployment to create
     metadata:
       labels:
-        app: posts
+        app: event-bus
     spec:
       containers:
-        - name: posts
-          image: attacktitan/blogmicro-posts
+        - name: event-bus
+          image: attacktitan/blogmicro-event-bus
 --- 
-# === Service Cluster IP for Posts Deployment
+# === Service Cluster IP for Event Bus Deployment
 apiVersion: v1
 kind: Service # cluster ip
 metadata:
-  name: posts-clusterip-srv
+  name: event-bus-srv
 spec:
   selector:
-    app: posts
+    app: event-bus
   type: ClusterIP
   ports:
-    - name: posts
+    - name: event-bus
       protocol: TCP
-      port: 4000
-      targetPort: 4000
+      port: 4005
+      targetPort: 4005
