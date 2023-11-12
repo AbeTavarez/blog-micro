@@ -1,0 +1,33 @@
+# === Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-depl
+spec:
+  replicas: 1
+  selector: # list the pods this deployment should manage using the matchLabels
+    matchLabels:
+      app: comments
+  template: # list the configuration of the pods we want this deployment to create
+    metadata:
+      labels:
+        app: comments
+    spec:
+      containers:
+        - name: comments
+          image: attacktitan/blogmicro-comments
+--- 
+# === Service Cluster IP for Event Bus Deployment
+apiVersion: v1
+kind: Service # cluster ip
+metadata:
+  name: comments-srv
+spec:
+  selector:
+    app: comments
+  type: ClusterIP
+  ports:
+    - name: comments
+      protocol: TCP
+      port: 4001
+      targetPort: 4001

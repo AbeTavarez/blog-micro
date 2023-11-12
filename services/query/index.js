@@ -43,7 +43,7 @@ app.listen(PORT, async () => {
 
   try {
     // makes request to event bus to get all events
-  const res = await axios.get('http://localhost:4005/events');
+  const res = await axios.get('http://event-bus-srv:4005/events');
 
   // process every event from event bus data store
   for (let event of res.data) {

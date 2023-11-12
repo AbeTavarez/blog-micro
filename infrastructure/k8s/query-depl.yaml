@@ -1,0 +1,33 @@
+# === Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: query-depl
+spec:
+  replicas: 1
+  selector: # list the pods this deployment should manage using the matchLabels
+    matchLabels:
+      app: query
+  template: # list the configuration of the pods we want this deployment to create
+    metadata:
+      labels:
+        app: query
+    spec:
+      containers:
+        - name: query
+          image: attacktitan/blogmicro-query
+--- 
+# === Service Cluster IP for Event Bus Deployment
+apiVersion: v1
+kind: Service # cluster ip
+metadata:
+  name: query-srv
+spec:
+  selector:
+    app: query
+  type: ClusterIP
+  ports:
+    - name: query
+      protocol: TCP
+      port: 4002
+      targetPort: 4002
