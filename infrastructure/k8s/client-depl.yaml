@@ -1,0 +1,33 @@
+# === Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: client-depl
+spec:
+  replicas: 1
+  selector: # list the pods this deployment should manage using the matchLabels
+    matchLabels:
+      app: client
+  template: # list the configuration of the pods we want this deployment to create
+    metadata:
+      labels:
+        app: client
+    spec:
+      containers:
+        - name: client
+          image: attacktitan/blogmicro-client
+--- 
+# === Service Cluster IP for Event Bus Deployment
+apiVersion: v1
+kind: Service # cluster ip
+metadata:
+  name: client-srv
+spec:
+  selector:
+    app: client
+  type: ClusterIP
+  ports:
+    - name: client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
