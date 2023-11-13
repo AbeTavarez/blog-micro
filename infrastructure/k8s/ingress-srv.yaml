@@ -2,16 +2,39 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-srv
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: 'true' # allows the use of regex (for routes params)
 spec:
   ingressClassName: nginx # this replaced the annotation: kubernetes.io/ingress.class: nginx
   rules:
     - host: posts.com # rule for posts service traffic
       http:
         paths:
-          - path: /posts
+          - path: /posts/create
             pathType: ImplementationSpecific
             backend:
               service:
                 name: posts-clusterip-srv # to communicate to posts cluster service
                 port:
                   number: 4000
+          - path: /posts
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: query-srv # to communicate to posts cluster service
+                port:
+                  number: 4002
+          - path: /posts/?(.*)/comments # wildcard to match and postId
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: comments-srv # to communicate to posts cluster service
+                port:
+                  number: 4001
+          - path: /?(.*) # this route is for (React App) with a wildcard to match any routes for client side routind
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: client-srv # to communicate to posts cluster service
+                port:
+                  number: 3000
