@@ -1,0 +1,57 @@
+apiVersion: skaffold/v4beta3
+kind: Config
+manifests:
+  rawYaml:
+    - ./infrastructure/k8s/*
+build:
+  local:
+    push: false # will not push the image to docker hub
+  artifacts: # the objects scaffold will be watching
+    - image: attacktitan/blogmicro-client # the client image info
+      context: client
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: attacktitan/blogmicro-comments # the client image info
+      context: ./services/comments
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: attacktitan/blogmicro-event-bus # the client image info
+      context: ./services/event-bus
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: attacktitan/blogmicro-moderation # the client image info
+      context: ./services/moderation
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: attacktitan/blogmicro-posts # the client image info
+      context: ./services/posts
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile
+    - image: attacktitan/blogmicro-query # the client image info
+      context: ./services/query
+      sync: # scaffold will keep in sync any js files inside src
+        manual:
+          - src: "*.js"
+            dest: .
+      docker:
+        dockerfile: Dockerfile

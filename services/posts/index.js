@@ -62,5 +62,6 @@ app.post('/events', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  console.log('v2');
   console.log(`Listening on port: ${PORT}`);
 });
